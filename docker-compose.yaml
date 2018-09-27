@@ -5,5 +5,5 @@ services:
   logstash:
     build: ./logstash
     image: self-logstash
-    expose:
-      - "4444:4444"
+    ports:
+      - "4444:4444/udp"
