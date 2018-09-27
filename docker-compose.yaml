@@ -1,0 +1,9 @@
+version: '2'
+
+services:
+
+  logstash:
+    build: ./logstash
+    image: self-logstash
+    expose:
+      - "4444:4444"
