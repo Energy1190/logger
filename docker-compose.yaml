@@ -7,3 +7,8 @@ services:
     image: self-logstash
     ports:
       - "4444:4444/udp"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "1"
