@@ -128,7 +128,6 @@ class SimpleElasticsearch:
         return result
 
     def template_exist(self, name:str):
-        print('DEBUG', name, list(self.template_get()))
         if name in list(self.template_get()): return True
 
     def wait(self, recursion=0, max_wait=180):
