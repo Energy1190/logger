@@ -10,6 +10,13 @@ from traceback import format_exc
 
 time_start = time.time()
 
+null = open(os.devnull, 'w')
+stdout = sys.stdout
+stderr = sys.stderr
+
+sys.stdout = null
+sys.stderr = null
+
 def msg(module,function,message,func, time_start=0, border=40, traceback=None):
     # Logging, according to the time from the beginning of the program.
     time_msg = time.time()
@@ -20,8 +27,15 @@ def msg(module,function,message,func, time_start=0, border=40, traceback=None):
     if len(msg_time) < (border + 15): msg_time += ' ' * ((border + 15) - len(msg_time))
 
     msg_out = '{}| -> {}'.format(msg_time, str(message))
+
+    sys.stdout = stdout
+    sys.stderr = stderr
+
     func(msg_out)
     if traceback: func('{}:TRACEBACK: \n\n{}'.format(msg_module, str(traceback)))
+
+    sys.stdout = null
+    sys.stderr = null
 
 def install_lib(name:str,recursion=0,pip='pip3'):
     msg(__name__, 'init:import:{}'.format(name), 'Start.', logging.info,
@@ -50,8 +64,7 @@ def install_lib(name:str,recursion=0,pip='pip3'):
         time_start=time_start)
     return lib
 
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
+logging.basicConfig(level=logging.INFO)
 
 msg(__name__,'init','Start.', logging.info, time_start=time_start)
 msg(__name__,'init:import','Start.', logging.info, time_start=time_start)
@@ -64,12 +77,6 @@ try:
 except:
     msg(__name__, 'init:import', 'Fail.', logging.error, time_start=time_start, traceback=format_exc())
     sys.exit(1)
-
-logger = logging.getLogger('elasticsearch5')
-logger.setLevel(logging.ERROR)
-
-logger = logging.getLogger('requests')
-logger.setLevel(logging.ERROR)
 
 msg(__name__,'init:import','Done.', logging.info, time_start=time_start)
 msg(__name__,'init:load','Start.', logging.info, time_start=time_start)
@@ -189,4 +196,4 @@ if __name__ == '__main__':
         sys.exit(1)
 
     print('\n\n\n')
-    main(args.name[0], args.host,int(args.port),template)
+    main('test', args.host,int(args.port),template)
