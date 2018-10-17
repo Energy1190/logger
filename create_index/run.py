@@ -50,7 +50,7 @@ def install_lib(name:str,recursion=0,pip='pip3'):
         time_start=time_start)
     return lib
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 msg(__name__,'init','Start.', logging.info, time_start=time_start)
 msg(__name__,'init:import','Start.', logging.info, time_start=time_start)
 
@@ -125,8 +125,8 @@ class SimpleElasticsearch:
             time_start=time_start)
         return result
 
-    def template_exist(self, name):
-        if name in self.template_get(): return True
+    def template_exist(self, name:str):
+        if name in list(self.template_get()): return True
 
     def wait(self, recursion=0, max_wait=180):
         msg(__name__, 'elastic_search:wait', 'Wait.', logging.info, time_start=time_start)
