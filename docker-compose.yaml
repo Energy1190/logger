@@ -5,7 +5,7 @@ services:
   templates:
     depends_on:
       elasticsearch:
-        condition: service_healthy
+        condition: service_started
     build: ./create_index
     image: self-index
     links:
@@ -34,7 +34,7 @@ services:
   logstash:
     depends_on:
       elasticsearch:
-        condition: service_healthy
+        condition: service_started
       templates:
         condition: service_started
     build: ./logstash
