@@ -36,11 +36,12 @@ services:
       elasticsearch:
         condition: service_healthy
       templates:
-        condition: service_exit
+        condition: service_started
     build: ./logstash
     image: self-logstash
     links:
       - "elasticsearch:elasticsearch"
+      - "templates:templates"
     ports:
       - "4444:4444/udp"
     logging:
@@ -48,3 +49,4 @@ services:
       options:
         max-size: "10m"
         max-file: "1"
+    command: bash -c "while ping -c1 templates &>/dev/null do sleep 1; done; && /logstash-entrypoint.sh"
