@@ -126,17 +126,21 @@ class SimpleElasticsearch:
         return result
 
     def template_exist(self, name:str):
+        print('DEBUG', name, list(self.template_get()))
         if name in list(self.template_get()): return True
 
     def wait(self, recursion=0, max_wait=180):
         msg(__name__, 'elastic_search:wait', 'Wait.', logging.info, time_start=time_start)
-        while not self.es.ping():
-            recursion += 1
-            time.sleep(1)
-            if recursion > max_wait:
-                msg(__name__, 'elastic_search:wait', 'Fail', logging.error,
-                    time_start=time_start, traceback=format_exc())
-                sys.exit(1)
+        try:
+            while not self.es.ping():
+                recursion += 1
+                time.sleep(1)
+                if recursion > max_wait:
+                    msg(__name__, 'elastic_search:wait', 'Fail', logging.error,
+                        time_start=time_start, traceback=format_exc())
+                    sys.exit(1)
+        except:
+            pass
 
         return True
 
