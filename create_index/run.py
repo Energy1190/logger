@@ -65,11 +65,17 @@ except:
     msg(__name__, 'init:import', 'Fail.', logging.error, time_start=time_start, traceback=format_exc())
     sys.exit(1)
 
+logger = logging.getLogger('elasticsearch5')
+logger.setLevel(logging.ERROR)
+
+logger = logging.getLogger('requests')
+logger.setLevel(logging.ERROR)
+
 msg(__name__,'init:import','Done.', logging.info, time_start=time_start)
 msg(__name__,'init:load','Start.', logging.info, time_start=time_start)
 
 TEMPLATE_BODY = { "index_patterns": ["logstash-*"],
-                  "mappings": {"_doc":{"properties":{
+                  "mappings": {"router":{"properties":{
                                             'connnewdestip': {"type": "ip"},
                                             'connnewsrcip': {"type": "ip"},
                                             'conndestip': {"type": "ip"},
