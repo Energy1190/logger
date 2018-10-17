@@ -1,7 +1,22 @@
-version: '2'
+version: '2.1'
 
 services:
   
+  templates:
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    build: ./create_index
+    image: self-index
+    links:
+      - "elasticsearch:elasticsearch"
+    command: /app/run.py logstash-index --host elasticsearch
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "1"
+        
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:6.3.2
     environment:
@@ -17,6 +32,11 @@ services:
         max-file: "1"
         
   logstash:
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+      templates:
+        condition: service_exit
     build: ./logstash
     image: self-logstash
     links:
