@@ -50,7 +50,9 @@ def install_lib(name:str,recursion=0,pip='pip3'):
         time_start=time_start)
     return lib
 
-logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+
 msg(__name__,'init','Start.', logging.info, time_start=time_start)
 msg(__name__,'init:import','Start.', logging.info, time_start=time_start)
 
@@ -131,16 +133,13 @@ class SimpleElasticsearch:
 
     def wait(self, recursion=0, max_wait=180):
         msg(__name__, 'elastic_search:wait', 'Wait.', logging.info, time_start=time_start)
-        try:
-            while not self.es.ping():
-                recursion += 1
-                time.sleep(1)
-                if recursion > max_wait:
-                    msg(__name__, 'elastic_search:wait', 'Fail', logging.error,
-                        time_start=time_start, traceback=format_exc())
-                    sys.exit(1)
-        except:
-            pass
+        while not self.es.ping():
+            recursion += 1
+            time.sleep(1)
+            if recursion > max_wait:
+                msg(__name__, 'elastic_search:wait', 'Fail', logging.error,
+                    time_start=time_start, traceback=format_exc())
+                sys.exit(1)
 
         return True
 
@@ -180,6 +179,9 @@ if __name__ == '__main__':
         sys.exit(1)
 
     msg(__name__, 'main:template', 'Done.', logging.info, time_start=time_start)
+    if not len(args.name):
+        msg(__name__, 'main:args', 'Fail.', logging.info, time_start=time_start)
+        sys.exit(1)
 
     print('\n\n\n')
-    main(args.name, args.host,int(args.port),template)
+    main(args.name[0], args.host,int(args.port),template)
