@@ -10,13 +10,6 @@ from traceback import format_exc
 
 time_start = time.time()
 
-null = open(os.devnull, 'w')
-stdout = sys.stdout
-stderr = sys.stderr
-
-sys.stdout = null
-sys.stderr = null
-
 def msg(module,function,message,func, time_start=0, border=40, traceback=None):
     # Logging, according to the time from the beginning of the program.
     time_msg = time.time()
@@ -28,14 +21,9 @@ def msg(module,function,message,func, time_start=0, border=40, traceback=None):
 
     msg_out = '{}| -> {}'.format(msg_time, str(message))
 
-    sys.stdout = stdout
-    sys.stderr = stderr
-
     func(msg_out)
     if traceback: func('{}:TRACEBACK: \n\n{}'.format(msg_module, str(traceback)))
 
-    sys.stdout = null
-    sys.stderr = null
 
 def install_lib(name:str,recursion=0,pip='pip3'):
     msg(__name__, 'init:import:{}'.format(name), 'Start.', logging.info,
