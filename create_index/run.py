@@ -69,21 +69,27 @@ except:
 msg(__name__,'init:import','Done.', logging.info, time_start=time_start)
 msg(__name__,'init:load','Start.', logging.info, time_start=time_start)
 
-TEMPLATE_BODY = { "index_patterns": ["logstash-*"],
-                  "mappings": {"router":{"properties":{
-                                            'connnewdestip': {"type": "ip"},
-                                            'connnewsrcip': {"type": "ip"},
-                                            'conndestip': {"type": "ip"},
-                                            'connsrcip': {"type": "ip"},
-                                            'connnewdestport': {"type": "integer"},
-                                            'conntime': {"type": "integer"},
-                                            'termsent': {"type": "integer"},
-                                            'origsent': {"type": "integer"},
-                                            'event': {"type": "text","fielddata": True},
-                                            'action': {"type": "text","fielddata": True},
-                                            'rule': {"type": "text","fielddata": True},
-                                            'connrecvif': {"type": "text","fielddata": True},
-                                            'conndestif': {"type": "text","fielddata": True}
+TEMPLATE_BODY = { "index_patterns": ["logstash-test-*"],
+                 "mappings": {"router":{"properties":{
+                    'connnewdestip': {"type": "ip"},
+                    'connnewsrcip': {"type": "ip"},
+                    'conndestip': {"type": "ip"},
+                    'connsrcip': {"type": "ip"},
+                    'destip': {"type": "ip"},
+                    'srcip': {"type": "ip"},
+                    'connsrcport': {"type": "integer"},
+                    'connnewdestport': {"type": "integer"},
+                    'conntime': {"type": "integer"},
+                    'termsent': {"type": "integer"},
+                    'origsent': {"type": "integer"},
+                    'conndestport': {"type": "integer"},
+                    'srcport': {"type": "integer"},
+                    'destport': {"type": "integer"},
+                    'event': {"type": "text","fielddata": True},
+                    'action': {"type": "text","fielddata": True},
+                    'rule': {"type": "text","fielddata": True},
+                    'connrecvif': {"type": "text","fielddata": True},
+                    'conndestif': {"type": "text","fielddata": True}
                  }}}}
 
 class SimpleElasticsearch:
