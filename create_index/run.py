@@ -193,4 +193,4 @@ if __name__ == '__main__':
         sys.exit(1)
 
     print('\n\n\n')
-    main(args.name, args.host,int(args.port),template)
+    main(args.name[0], args.host,int(args.port),template)
