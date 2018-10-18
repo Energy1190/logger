@@ -68,10 +68,15 @@ except:
     msg(__name__, 'init:import', 'Fail.', logging.error, time_start=time_start, traceback=format_exc())
     sys.exit(1)
 
+log.getLogger("requests").setLevel(log.ERROR)
+log.getLogger("urllib3").setLevel(log.ERROR)
+log.getLogger("elasticsearch5").setLevel(log.ERROR)
+
 msg(__name__,'init:import','Done.', logging.info, time_start=time_start)
 msg(__name__,'init:load','Start.', logging.info, time_start=time_start)
 
-TEMPLATE_BODY = { "index_patterns": ["logstash-*"],
+TEMPLATE_BODY = {"index_patterns": ["logstash-*"],
+                 "order": 1,
                  "settings": {"max_result_window": 50000},
                  "mappings": {"router":{"properties":{
                     'connnewdestip': {"type": "ip"},
@@ -169,7 +174,7 @@ msg(__name__,'init:load','Done.', logging.info, time_start=time_start)
 if __name__ == '__main__':
     msg(__name__, 'main:parser', 'Start.', logging.info, time_start=time_start)
     parser = argparse.ArgumentParser()
-    parser.add_argument('name', nargs=1)
+    parser.add_argument('name', nargs=1, default='logstash-index')
     parser.add_argument('--host', default='localhost')
     parser.add_argument('--port', default='9200')
     parser.add_argument('--template')
