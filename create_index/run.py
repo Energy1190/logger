@@ -70,7 +70,7 @@ except:
 msg(__name__,'init:import','Done.', logging.info, time_start=time_start)
 msg(__name__,'init:load','Start.', logging.info, time_start=time_start)
 
-TEMPLATE_BODY = { "index_patterns": ["logstash-test-*"],
+TEMPLATE_BODY = { "index_patterns": ["logstash-*"],
                  "settings": {"max_result_window": 50000},
                  "mappings": {"router":{"properties":{
                     'connnewdestip': {"type": "ip"},
@@ -192,4 +192,4 @@ if __name__ == '__main__':
         sys.exit(1)
 
     print('\n\n\n')
-    main('test', args.host,int(args.port),template)
+    main(args.name, args.host,int(args.port),template)
