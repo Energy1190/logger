@@ -71,6 +71,7 @@ msg(__name__,'init:import','Done.', logging.info, time_start=time_start)
 msg(__name__,'init:load','Start.', logging.info, time_start=time_start)
 
 TEMPLATE_BODY = { "index_patterns": ["logstash-test-*"],
+                 "settings": {"max_result_window": 50000},
                  "mappings": {"router":{"properties":{
                     'connnewdestip': {"type": "ip"},
                     'connnewsrcip': {"type": "ip"},
