@@ -52,8 +52,9 @@ def install_lib(name:str,recursion=0,pip='pip3'):
         time_start=time_start)
     return lib
 
+log = logging
 logging = logging.getLogger(__name__)
-logging.setLevel(logging.INFO)
+logging.setLevel(log.INFO)
 
 msg(__name__,'init','Start.', logging.info, time_start=time_start)
 msg(__name__,'init:import','Start.', logging.info, time_start=time_start)
