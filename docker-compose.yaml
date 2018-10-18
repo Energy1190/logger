@@ -49,4 +49,5 @@ services:
       options:
         max-size: "10m"
         max-file: "1"
+    entrypoint: bash -c "while ping -c1 templates &>/dev/null; do sleep 1; done; sleep 10 && /docker-entrypoint.sh"
     #command: bash -c "while ping -c1 templates &>/dev/null; do sleep 1; done; sleep 10 && /docker-entrypoint.sh -e ''"
