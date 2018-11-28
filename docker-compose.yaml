@@ -51,3 +51,14 @@ services:
         max-file: "1"
     #entrypoint: bash -c "while ping -c1 templates &>/dev/null; do sleep 1; done; sleep 10 && /docker-entrypoint.sh"
     command: bash -c "while ping -c1 templates &>/dev/null; do sleep 1; done; sleep 10 && /docker-entrypoint.sh -f /conf/logstash.conf"
+  
+  mysql:
+    image: mysql:5.7
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "1"
+    volumes:
+      - "/data/db:/var/lib/mysql"
+      - "./mysql/conf.d:/etc/mysql/conf.d:ro"
