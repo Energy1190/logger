@@ -59,6 +59,11 @@ services:
       options:
         max-size: "10m"
         max-file: "1"
+    environment:
+      - "MYSQL_DATABASE=monitor"
+      - "MYSQL_USER=monitor"
+      - "MYSQL_PASSSWORD=monitor"
+      - "MYSQL_RANDOM_ROOT_PASSWORD=yes"
     volumes:
       - "/data/db:/var/lib/mysql"
       - "./mysql/conf.d:/etc/mysql/conf.d:ro"
