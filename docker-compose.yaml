@@ -19,6 +19,7 @@ services:
         
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:6.3.2
+    restart: always
     environment:
       - "ES_JAVA_OPTS=-Xms2g -Xmx2g"
       - "http.host=0.0.0.0"
@@ -37,6 +38,7 @@ services:
         condition: service_started
       templates:
         condition: service_started
+    restart: always
     build: ./logstash
     image: self-logstash
     links:
@@ -54,6 +56,7 @@ services:
   
   mysql:
     image: mysql:5.7
+    restart: always
     logging:
       driver: "json-file"
       options:
